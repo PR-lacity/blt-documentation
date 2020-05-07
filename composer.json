@@ -4,12 +4,12 @@
     "type": "project",
     "license": "GPL-2.0-or-later",
     "homepage": "https://www.drupal.org/project/drupal",
-        "require": {
+        "require": { 
+        "composer/installers": "^1.2",
         "php": ">=7.2",
-        "acquia/blt": "^11.2.0",
+        "acquia/blt": "^11.4.0",
         "acquia/drupal-spec-tool": "*",
         "acquia/memcache-settings": "*",
-        "composer/installers": "^1.2",
         "drupal/acquia_connector": "^1.5.0",
         "drupal/acquia_purge": "^1.0-beta3",
         "drupal/cog": "^1.0.0",
@@ -33,7 +33,7 @@
         },
         "ita-aquarium": {
             "type": "vcs",
-             "url": "https://github.com/cityoflosangeles/ita-aquarium"
+            "url": "https://github.com/cityoflosangeles/ita-aquarium"
         },
         "ace-builds": {
            "type": "package",

@@ -1,5 +1,10 @@
 # bash script
 #/bin/bash
+# Check if running as root
+if [[ "$EUID" -ne 0 ]]
+  then echo "Please run as root"
+  exit
+fi
 # Get and install updates
 sudo apt update && sudo apt upgrade
 # Add php repository

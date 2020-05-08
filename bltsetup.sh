@@ -1,4 +1,8 @@
 #/bin/bash
+if [[ "$EUID" -ne 0 ]]
+  then echo "Please run as root"
+  exit
+fi
 sudo add-apt-repository ppa:ondrej/php 
 sudo apt-get update
 sudo apt-get install -y php7.2-cli php7.2-curl php7.2-xml php7.2-mbstring php7.2-bz2 php7.2-gd php7.2-mysql mysql-client unzip git

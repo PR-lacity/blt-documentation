@@ -96,7 +96,7 @@ if [[ $EUID -ne 0 ]]; then
     # unlink composer setup
     php -r "unlink('composer-setup.php');"
 
-    echo "Done.  If errors are encountered, reboot the WSL userspace by running the following command from powershell as administrator."
+    echo "Done.  To finsh setup, run the following command from powershell as administrator, then relaunch WSL."
     echo "Get-Service LxssManager | Restart-Service"
 else
     echo "Do not run script as root (sudo)."

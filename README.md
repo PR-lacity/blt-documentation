@@ -12,3 +12,8 @@ run
 or 
 
 `awk 'BEGIN{RS="^$";ORS="";getline;gsub("\r","");print>ARGV[1]}' oneline.sh`
+
+
+
+Restart WSL userspace
+`Get-Service LxssManager | Restart-Service`

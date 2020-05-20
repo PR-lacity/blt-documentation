@@ -63,7 +63,15 @@ if [[ $EUID -ne 0 ]]; then
     read gitName
     # Set git username
     git config --global user.name "$gitName"
-
+    # Clear composer cache
+    echo "Clearing composer cache"
+    composer clear-cache
+    # Set composer timeout
+    export COMPOSER_PROCESS_TIMEOUT=2000
+    # unlink composer setup
+    php -r "unlink('composer-setup.php');"
+    echo "Done.  If errors are encountered, reboot the WSL userspace by running the following command from powershell as administrator."
+    echo "Get-Service LxssManager | Restart-Service"
 else
     echo "Do not run script as root (sudo)."
 fi

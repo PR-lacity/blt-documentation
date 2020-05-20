@@ -9,11 +9,6 @@ If the following error is encountered:
 run
 `awk 'BEGIN{RS="^$";ORS="";getline;gsub("\r","");print>ARGV[1]}' bltsetup.sh`
 
-or 
+After script finishes running, restart WSL userspace by running the following from an administrative powershell
 
-`awk 'BEGIN{RS="^$";ORS="";getline;gsub("\r","");print>ARGV[1]}' oneline.sh`
-
-
-
-Restart WSL userspace
 `Get-Service LxssManager | Restart-Service`

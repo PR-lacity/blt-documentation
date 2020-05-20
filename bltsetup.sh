@@ -1,55 +1,73 @@
 #!/bin/bash
 if [[ $EUID -ne 0 ]]; then
     # Get and install updates
+    echo "==================================================="
     echo "Checking for updates"
-    sudo apt update -y 
+    echo "==================================================="
+    echo ""
+    sudo apt update
+    echo "==================================================="
     echo "Installing updates. This may take a bit."
+    echo "==================================================="
+    echo ""
     sudo apt upgrade -y 
     # Add php repository
+    echo "==================================================="
     echo "Adding PHP package"
+    echo "==================================================="
+    echo ""
     sudo add-apt-repository ppa:ondrej/php  -y 
     # Update repositories
+    echo "==================================================="
     echo "Refreshing repositories"
+    echo "==================================================="
+    echo ""
     sudo apt-get update -y 
     # Install PHP, mysql, unzip, and git
-    echo "Installing PHP (1/7)"
-    sudo apt-get install -y php7.2-cli 
-    echo "Installing PHP (2/7)"
-    sudo apt-get install -y php7.2-curl 
-    echo "Installing PHP (3/7)"    
-    sudo apt-get install -y php7.2-xml 
-    echo "Installing PHP (4/7)"    
-    sudo apt-get install -y php7.2-mbstring 
-    echo "Installing PHP (5/7)"    
-    sudo apt-get install -y php7.2-bz2 
-    echo "Installing PHP (6/7)"    
-    sudo apt-get install -y php7.2-gd 
-    echo "Installing PHP (7/7)"    
-    sudo apt-get install -y php7.2-mysql 
-    echo "Installing MySQL"
-    sudo apt-get install -y mysql-client 
-    echo "Installing Unzip"
-    sudo apt-get install -y unzip 
-    echo "Installing git"
-    sudo apt-get install -y git 
+    echo "==================================================="
+    echo "Installing dependencies"
+    echo "==================================================="
+    echo ""
+    sudo apt-get install -y php7.2-cli php7.2-curl php7.2-xml php7.2-mbstring php7.2-bz2 php7.2-gd php7.2-mysql mysql-client unzip git 
     # Download composer
-    echo "Downloadind Composer package manager"
+    echo "==================================================="
+    echo "Downloading Composer package manager"
+    echo "==================================================="
+    echo ""
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     # Run composer install
+    echo "==================================================="
     echo "Installing Composer"
+    echo "==================================================="
+    echo ""
     php composer-setup.php -y 
     # Allow composer to be run globally
     sudo mv composer.phar /usr/local/bin/composer
-    # Install drush globally
-    echo "Installing Drush"
-    composer global require drush/drush
-    export PATH="$HOME/.config/composer/vendor/bin:$PATH"
     # Install prestissimo - composer enhancement to allow parallel installations
-    echo "Installing Prestissimo - composer enhancement to allow parallel installations"
+    echo "==================================================="
+    echo "Installing Prestissimo"
+    echo "==================================================="
+    echo ""
     composer global require hirak/prestissimo:^0.3 
     # Install composer drupal optimizations - improves composer performance for drupal projects
+    echo "==================================================="
     echo "Installing Composer Drupal Optimizations"
+    echo "==================================================="
+    echo ""
     composer global require zaporylie/composer-drupal-optimizations:^1.1 
+    # Install drush globally
+    echo "==================================================="
+    echo "Installing Drush" 
+    echo "==================================================="
+    echo ""
+    composer global require drush/drush
+    echo "==================================================="
+    echo "Adding drush to system path"
+    echo "==================================================="
+    echo ""
+    echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' >> ~/.bashrc
+    echo ""
+    echo ""
     # Prompt user to enter git email address
     echo Enter git email
     # Get user input for git email.  
@@ -64,12 +82,20 @@ if [[ $EUID -ne 0 ]]; then
     # Set git username
     git config --global user.name "$gitName"
     # Clear composer cache
+    echo "==================================================="
     echo "Clearing composer cache"
+    echo "==================================================="
+    echo ""
     composer clear-cache
     # Set composer timeout
-    export COMPOSER_PROCESS_TIMEOUT=2000
+    # echo "==================================================="
+    # echo "Setting composer timeout"
+    # echo "==================================================="
+    # echo ""
+    # echo 'export COMPOSER_PROCESS_TIMEOUT=2000'
     # unlink composer setup
     php -r "unlink('composer-setup.php');"
+
     echo "Done.  If errors are encountered, reboot the WSL userspace by running the following command from powershell as administrator."
     echo "Get-Service LxssManager | Restart-Service"
 else

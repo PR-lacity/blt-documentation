@@ -31,7 +31,7 @@ if [[ $EUID -ne 0 ]]; then
     sudo apt-get install -y php7.2-cli php7.2-curl php7.2-xml php7.2-mbstring php7.2-bz2 php7.2-gd php7.2-mysql mysql-client unzip git 
     # Download composer
     echo "==================================================="
-    echo "Downloading Composer package manager"
+    echo "Downloadind Composer package manager"
     echo "==================================================="
     echo ""
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -43,6 +43,13 @@ if [[ $EUID -ne 0 ]]; then
     php composer-setup.php -y 
     # Allow composer to be run globally
     sudo mv composer.phar /usr/local/bin/composer
+    # Install drush globally
+    echo "==================================================="
+    echo "Installing Drush" 
+    echo "==================================================="
+    echo ""
+    composer global require drush/drush
+    export PATH="$HOME/.config/composer/vendor/bin:$PATH"
     # Install prestissimo - composer enhancement to allow parallel installations
     echo "==================================================="
     echo "Installing Prestissimo"
@@ -55,19 +62,6 @@ if [[ $EUID -ne 0 ]]; then
     echo "==================================================="
     echo ""
     composer global require zaporylie/composer-drupal-optimizations:^1.1 
-    # Install drush globally
-    echo "==================================================="
-    echo "Installing Drush" 
-    echo "==================================================="
-    echo ""
-    composer global require drush/drush
-    echo "==================================================="
-    echo "Adding drush to system path"
-    echo "==================================================="
-    echo ""
-    echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' >> ~/.bashrc
-    echo ""
-    echo ""
     # Prompt user to enter git email address
     echo Enter git email
     # Get user input for git email.  
@@ -88,11 +82,7 @@ if [[ $EUID -ne 0 ]]; then
     echo ""
     composer clear-cache
     # Set composer timeout
-    # echo "==================================================="
-    # echo "Setting composer timeout"
-    # echo "==================================================="
-    # echo ""
-    # echo 'export COMPOSER_PROCESS_TIMEOUT=2000'
+    export COMPOSER_PROCESS_TIMEOUT=2000
     # unlink composer setup
     php -r "unlink('composer-setup.php');"
 

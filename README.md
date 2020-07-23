@@ -1,5 +1,7 @@
 # blt-documentation
 
+Updated to add PHP version selection.
+
 If the following error is encountered:
 
 ./bltsetup.sh: line #: syntax error near unexpected token `fi'

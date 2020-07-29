@@ -68,13 +68,40 @@ if [[ $EUID -ne 0 ]]; then
     echo "==================================================="
     echo ""
     composer global require drush/drush
-    export PATH="$HOME/.config/composer/vendor/bin:$PATH"
+    echo "Setting environment variables for Drush"
+    echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' >> .bashrc
     # Install composer drupal optimizations - improves composer performance for drupal projects
     echo "==================================================="
     echo "Installing Composer Drupal Optimizations"
     echo "==================================================="
     echo ""
     composer global require zaporylie/composer-drupal-optimizations:^1.1 
+    echo "==================================================="
+    echo "Installing Acquia BLT"
+    echo "==================================================="
+    echo ""
+    echo "Setting environment variables for BLT"
+    echo 'function blt() {
+if [[ ! -z ${AH_SITE_ENVIRONMENT} ]]; then
+    PROJECT_ROOT="/var/www/html/${AH_SITE_GROUP}.${AH_SITE_ENVIRONMENT}"
+elif [ "`git rev-parse --show-cdup 2> /dev/null`" != "" ]; then
+    PROJECT_ROOT=$(git rev-parse --show-cdup)
+else
+    PROJECT_ROOT="."
+fi
+
+if [ -f "$PROJECT_ROOT/vendor/bin/blt" ]; then
+    $PROJECT_ROOT/vendor/bin/blt "$@"
+
+# Check for local BLT.
+elif [ -f "./vendor/bin/blt" ]; then
+    ./vendor/bin/blt "$@"
+
+else
+    echo "You must run this command from within a BLT-generated project."
+    return 1
+fi
+        }' >> .bashrc
     # Prompt user to enter git email address
     echo "Enter git email"
     # Get user input for git email.  

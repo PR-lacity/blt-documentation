@@ -56,12 +56,6 @@ if [[ $EUID -ne 0 ]]; then
     php composer-setup.php -y 
     # Allow composer to be run globally
     sudo mv composer.phar /usr/local/bin/composer
-    # Install prestissimo - composer enhancement to allow parallel installations
-    echo "==================================================="
-    echo "Installing Prestissimo"
-    echo "==================================================="
-    echo ""
-    composer global require hirak/prestissimo:^0.3 
     # Install drush globally
     echo "==================================================="
     echo "Installing Drush" 
@@ -69,13 +63,13 @@ if [[ $EUID -ne 0 ]]; then
     echo ""
     composer global require drush/drush
     echo "Setting environment variables for Drush"
-    echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' >> .bashrc
+    echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' >> ~/.bashrc
     # Install composer drupal optimizations - improves composer performance for drupal projects
     echo "==================================================="
     echo "Installing Composer Drupal Optimizations"
     echo "==================================================="
     echo ""
-    composer global require zaporylie/composer-drupal-optimizations:^1.1 
+    composer global require zaporylie/composer-drupal-optimizations:^1.2 
     echo "==================================================="
     echo "Installing Acquia BLT"
     echo "==================================================="
@@ -101,7 +95,7 @@ else
     echo "You must run this command from within a BLT-generated project."
     return 1
 fi
-        }' >> .bashrc
+        }' >> ~/.bashrc
     # Prompt user to enter git email address
     echo "Enter git email"
     # Get user input for git email.  

@@ -64,12 +64,6 @@ if [[ $EUID -ne 0 ]]; then
     composer global require drush/drush
     echo "Setting environment variables for Drush"
     echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' | tee -a ~/.profile ~/.zprofile >/dev/null
-    # Install composer drupal optimizations - improves composer performance for drupal projects
-    echo "==================================================="
-    echo "Installing Composer Drupal Optimizations"
-    echo "==================================================="
-    echo ""
-    composer global require zaporylie/composer-drupal-optimizations:^1.2 
     echo "==================================================="
     echo "Installing Acquia BLT"
     echo "==================================================="

@@ -39,6 +39,7 @@ if [[ $EUID -ne 0 ]]; then
     sudo apt-get install -y php$PHPver-bz2
     sudo apt-get install -y php$PHPver-gd
     sudo apt-get install -y php$PHPver-mysql
+    sudo apt-get install -y php$PHPver-zip
     sudo apt-get install -y mysql-client
     sudo apt-get install -y unzip
     sudo apt-get install -y git 

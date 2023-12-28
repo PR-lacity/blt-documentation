@@ -39,6 +39,7 @@ if [[ $EUID -ne 0 ]]; then
     sudo apt-get install -y php$PHPver-bz2
     sudo apt-get install -y php$PHPver-gd
     sudo apt-get install -y php$PHPver-mysql
+    sudo apt-get install -y php$PHPver-zip
     sudo apt-get install -y mysql-client
     sudo apt-get install -y unzip
     sudo apt-get install -y git 
@@ -63,39 +64,15 @@ if [[ $EUID -ne 0 ]]; then
     echo ""
     composer global require drush/drush
     echo "Setting environment variables for Drush"
-    echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' >> ~/.bashrc
-    # Install composer drupal optimizations - improves composer performance for drupal projects
-    echo "==================================================="
-    echo "Installing Composer Drupal Optimizations"
-    echo "==================================================="
-    echo ""
-    composer global require zaporylie/composer-drupal-optimizations:^1.2 
+    echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' | tee -a ~/.profile ~/.zprofile >/dev/null
     echo "==================================================="
     echo "Installing Acquia BLT"
     echo "==================================================="
     echo ""
-    echo "Setting environment variables for BLT"
-    echo 'function blt() {
-if [[ ! -z ${AH_SITE_ENVIRONMENT} ]]; then
-    PROJECT_ROOT="/var/www/html/${AH_SITE_GROUP}.${AH_SITE_ENVIRONMENT}"
-elif [ "`git rev-parse --show-cdup 2> /dev/null`" != "" ]; then
-    PROJECT_ROOT=$(git rev-parse --show-cdup)
-else
-    PROJECT_ROOT="."
-fi
-
-if [ -f "$PROJECT_ROOT/vendor/bin/blt" ]; then
-    $PROJECT_ROOT/vendor/bin/blt "$@"
-
-# Check for local BLT.
-elif [ -f "./vendor/bin/blt" ]; then
-    ./vendor/bin/blt "$@"
-
-else
-    echo "You must run this command from within a BLT-generated project."
-    return 1
-fi
-        }' >> ~/.bashrc
+    echo "Setting up BLT Launcher"
+    wget -O blt.phar https://github.com/acquia/blt-launcher/releases/latest/download/blt.phar
+    chmod +x blt.phar
+    sudo mv blt.phar /usr/local/bin/blt
     # Prompt user to enter git email address
     echo "Enter git email"
     # Get user input for git email.  
